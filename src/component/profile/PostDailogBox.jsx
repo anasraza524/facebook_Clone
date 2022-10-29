@@ -499,7 +499,10 @@ deletePost(onclickPostid)
           <DialogTitle id="alert-dialog-title">
             <span style={{ fontWeight: 'bold', fontSize: '22px', alignItems: 'center' }}>  Updated Post.. </span>
 
-            <Button style={{ float: 'right', fontSize: '22px', color: 'Black' }} onClick={closeHandle2}><MdCancel /></Button>
+            <Button style={{ float: 'right', fontSize: '22px', color: 'Black' }}
+             onClick={()=>{
+              
+             }}><MdCancel /></Button>
           </DialogTitle>
           <Divider />
 
