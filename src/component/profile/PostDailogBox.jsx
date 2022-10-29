@@ -500,9 +500,8 @@ deletePost(onclickPostid)
             <span style={{ fontWeight: 'bold', fontSize: '22px', alignItems: 'center' }}>  Updated Post.. </span>
 
             <Button style={{ float: 'right', fontSize: '22px', color: 'Black' }}
-             onClick={()=>{
-              
-             }}><MdCancel /></Button>
+             onClick={closeHandle2}
+             ><MdCancel /></Button>
           </DialogTitle>
           <Divider />
 
@@ -511,7 +510,7 @@ deletePost(onclickPostid)
               <TextField
                 id="outlined-multiline-static"
                 type="text"
-                rows={8}
+              
                 value={editing.editingText}
                 onChange={(e) => {
                   setEditing({
@@ -519,10 +518,12 @@ deletePost(onclickPostid)
                     editingText: e.target.value
                   })
                 }}
-                placeholder="please enter updated value"
-               
+
+                placeholder="please enter updated text"
+                
                
                 style={{ width: '100%' }}
+                rows={8}
               />
             </DialogContentText>
 
