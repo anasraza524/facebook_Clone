@@ -1,0 +1,97 @@
+
+.dark {
+    --bg-color: rgb(21, 32, 43);
+    --main-color: white;
+    --post-color: rgb(63, 63, 63);
+    --font-color: white;
+    --font-hover: rgb(201, 201, 201);
+    --body-color: rgb(49, 49, 49);
+  }
+  
+  .light {
+    --bg-color: rgb(255, 255, 255);
+    --main-color: black;
+    --post-color: whitesmoke;
+    --font-color: rgb(0, 0, 0);
+    --font-hover: rgb(201, 201, 201);
+    --body-color: #eee;
+  }
+.profileBody{
+    max-width: 950px;
+    color: var(--font-color);
+margin: 5px;
+border-radius: 5px;
+}
+.coverPhoto{
+
+height: 250px;
+width: 950px;
+
+}
+.prfileBox{
+display: flex;
+align-items: center;
+background-color: var(--bg-color);
+padding: 10px;
+
+}
+.prfileBox   .profilephoto{
+height: 170px;
+width: 170px;
+border-radius: 150px;
+border: 2px solid; 
+}
+.prifileName{
+font-size: 20px;
+font-weight: bold;
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+padding: 10px;
+}
+.introBody{
+margin: 5px;
+    max-width:370px ;
+    background-color: var(--bg-color);
+    padding: 15px;
+    border-radius: 5px;
+}
+table{  
+    border:none;  
+}  
+td{  
+    width:10px;
+    height: 10px;  
+} 
+.introfrined{
+    border-radius: 5px;
+    margin-top: 10px;
+    max-width:370px ;
+    background-color: var(--bg-color);
+    padding: 7px;
+    padding-left: 20px;
+} 
+.gellery img{
+    margin-top: 10px;
+    height: 130px;
+    width: 130px;
+}
+.font{
+   color: var(--font-hover); font-size: small
+}
+.font2{
+color: var(--font-hover); font-size: small;
+}
+.ProfileBody{
+    display: flex;
+}
+.profileLeftPannel{
+position: relative;
+top: 10%;
+
+
+}
+.profileRightPannel{
+    position: sticky;
+  top:80px;
+ 
+  height:calc(110vh - 150px);
+}
