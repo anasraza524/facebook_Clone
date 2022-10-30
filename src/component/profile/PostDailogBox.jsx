@@ -55,7 +55,7 @@ import  { MenuProps } from '@mui/material/Menu';
 import { AiFillLike } from "react-icons/ai";
 import { MdInsertComment, MdDelete } from "react-icons/md";
 import { FaShare } from "react-icons/fa";
-
+import axios from 'axios';
 // firebase
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
@@ -137,9 +137,12 @@ const PostDailogBox = () => {
 
   const [editing, setEditing] = useState({
     editingId: null,
-    editingText: ""
+    editingText: "",
+    editingImage:""
   })
+  const [file, setFile] = useState(null)
   const [updatedText, setUpdatedText] = useState('')
+  const [onclickPostImage, setOnclickPostImage] = useState("")
   const [onclickPostText, setOnclickPostText] = useState("")
   const [onclickPostid, setonclickPostid] = useState("")
   const [isLoading, setIsLoading] = useState(false);
@@ -202,23 +205,51 @@ const PostDailogBox = () => {
 
   const savePost = async () => {
 
-
-
     console.log("postText", postText);
     closeHandle()
-    // 
-    try {
-      const docRef = await addDoc(collection(db, "Posts"), {
-        text: postText,
-        createdOn: serverTimestamp(),
-   
 
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-      setIsLoading(false)
-    }
+    const cloudinaryData = new FormData();
+    cloudinaryData.append("file", file);
+    cloudinaryData.append("upload_preset", "profilePicture");
+    cloudinaryData.append("cloud_name","dnjbznntm");
+    console.log(cloudinaryData);
+    axios.post(`https://api.cloudinary.com/v1_1/dnjbznntm/image/upload`,
+    cloudinaryData, {
+       header:{
+'Content-Type':'multipart/from-data'
+       }
+    })
+        .then(async res => {
+           
+            console.log("from then", res.data);
+   
+            try {
+              const docRef = await addDoc(collection(db, "Posts"), {
+                text: postText,
+                createdOn: serverTimestamp(),
+                img:res?.data?.url,
+        
+              });
+              console.log("Document written with ID: ", docRef.id);
+             } catch (e) {
+              console.error("Error adding document: ", e);
+              setIsLoading(false)
+            }   
+
+        })
+        .catch(err => {
+            console.log("from catch", err);
+        })
+
+
+
+
+
+
+
+    
+    // 
+  
   }
 
 
@@ -234,19 +265,21 @@ const PostDailogBox = () => {
 
 
   const updatedPost = async (e) => {
+   
     e.preventDefault();
 
-
+    
     
 await updateDoc(doc(db, "Posts", editing.editingId), {
   
-  text:editing.editingText
-
+  text:editing.editingText,
+img:editing.editingImage
 });
 console.log(editing.editingText)
  setEditing({
   editingId: null,
-  editingText: ""
+  editingText: "",
+  editingImage:''
  })
 
 
@@ -316,16 +349,21 @@ console.log('postid',onclickPostid)
                 style={{ width: '100%' }}
               />
             </DialogContentText>
-
           </DialogContent>
           <Stack m='10px' borderRadius='5px' border="solid 1px lightGrey" p='15px' paddingLeft='30px'>
             <div style={{ display: 'flex' }}>
               <span style={{ fontWeight: 'bold', fontSize: '15px' }}> Add your Photo </span>
 
               <span style={{ alignItems: 'baseline', marginLeft: '50%' }} >
-                <FaImage style={{ paddingLeft: "5px", fontSize: "25px", color: 'green' }} />
-
-
+              
+              <span>  <FaImage style={{ paddingLeft: "5px", fontSize: "25px", color: 'green' }} />
+               <input type="file"
+                name='postImage' 
+                onChange={(e)=>{
+                setFile(e.currentTarget.files[0])
+               }}
+                />
+              </span>
                 <FaUserTag style={{ paddingLeft: "5px", fontSize: "25px", color: 'blue' }} />
 
                 <BsEmojiSmile style={{ paddingLeft: "5px", fontSize: "25px", color: 'yellow' }} />
@@ -370,6 +408,7 @@ console.log('postid',onclickPostid)
                   onClick={() => {
  setonclickPostid(eachPost?.id)
  setOnclickPostText(eachPost?.text)
+ setOnclickPostImage(eachPost?.img)
 
  }}
 />
@@ -414,12 +453,12 @@ console.log('postid',onclickPostid)
           <Divider />
         <MenuItem onClick={() => {
           
-
+          handleClose()
 openHandle2()
 setEditing({
   editingId:onclickPostid,
-  editingText:onclickPostText
-  
+  editingText:onclickPostText,
+  editingImage:onclickPostImage
 })
 
 }}>
@@ -545,7 +584,20 @@ deletePost(onclickPostid)
               <span style={{ fontWeight: 'bold', fontSize: '15px' }}> Add your Photo </span>
 
               <span style={{ alignItems: 'baseline', marginLeft: '50%' }} >
-                <FaImage style={{ paddingLeft: "5px", fontSize: "25px", color: 'green' }} />
+              <span>  <FaImage style={{ paddingLeft: "5px", fontSize: "25px", color: 'green' }} />
+               <input
+                type="file"
+              //  value={this.editing.editingImage}
+                name='postImage' 
+              onChange={(e)=>{
+                setEditing({
+                  ...editing,
+                  editingImage: e.target.value
+                })
+               setFile(e.currentTarget.files[0])
+               }}
+                />
+              </span>
 
 
                 <FaUserTag style={{ paddingLeft: "5px", fontSize: "25px", color: 'blue' }} />
@@ -574,7 +626,8 @@ deletePost(onclickPostid)
         </Dialog></form>
 
     : eachPost?.text}
-      {(closeHandle2)?eachPost?.text:''}
+      {(closeHandle2 )?eachPost?.text:''}
+      <img src={eachPost?.img}  />
             </div>
 
 
