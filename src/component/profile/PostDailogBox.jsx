@@ -139,6 +139,7 @@ const PostDailogBox = () => {
     editingId: null,
     editingText: ""
   })
+  const [updatedText, setUpdatedText] = useState('')
   const [onclickPostText, setOnclickPostText] = useState("")
   const [onclickPostid, setonclickPostid] = useState("")
   const [isLoading, setIsLoading] = useState(false);
@@ -210,6 +211,7 @@ const PostDailogBox = () => {
       const docRef = await addDoc(collection(db, "Posts"), {
         text: postText,
         createdOn: serverTimestamp(),
+   
 
       });
       console.log("Document written with ID: ", docRef.id);
@@ -231,27 +233,32 @@ const PostDailogBox = () => {
 
 
 
-  const updatedPost = async (postId,updatedText) => {
-    handleClose()
+  const updatedPost = async (e) => {
+    e.preventDefault();
+
+
     
-await updateDoc(doc(db, "Posts", postId), {
-  text: updatedText
+await updateDoc(doc(db, "Posts", editing.editingId), {
+  
+  text:editing.editingText
+
 });
+console.log(editing.editingText)
+ setEditing({
+  editingId: null,
+  editingText: ""
+ })
+
 
 
     // console.log('postId', postId)
   }
 
-const edit = (postId,text) => { 
-  setEditing({
-    editingId:postId,
-    editingText:text
-    
-  })
-  console.log('editingId:',postId)
-console.log('editingText',text)
+
+//   console.log('editingId:',postId)
+// console.log('editingText',text)
 console.log('postid',onclickPostid)
- }
+
 
   return (
     <div>
@@ -409,9 +416,11 @@ console.log('postid',onclickPostid)
           
 
 openHandle2()
-edit(
-onclickPostid , onclickPostText
-)
+setEditing({
+  editingId:onclickPostid,
+  editingText:onclickPostText
+  
+})
 
 }}>
         <div style={{ fontSize: '20px', paddingRight: '10px' }}>
@@ -487,8 +496,11 @@ deletePost(onclickPostid)
 
             </div>
             <div className="post-content">
+              
             {(onclickPostid === editing.editingId) ?
-            <Dialog
+              
+          <form onSubmit={updatedPost}>
+           <Dialog
           open={open2}
           onClose={closeHandle2}
           aria-labelledby="alert-dialog-title"
@@ -521,9 +533,9 @@ deletePost(onclickPostid)
 
                 placeholder="please enter updated text"
                 
-               
-                style={{ width: '100%' }}
                 rows={8}
+                style={{ width: '100%' }}
+                
               />
             </DialogContentText>
 
@@ -552,15 +564,17 @@ deletePost(onclickPostid)
 
             <Button style={{ width: '100%' }}
              type='submit'
-             onClick={updatedPost}
+          onClick={closeHandle2}
              variant="contained" disableElevation >
               update
             </Button>
 
           </DialogActions>
 
-        </Dialog> : eachPost?.text}
+        </Dialog></form>
 
+    : eachPost?.text}
+      {(closeHandle2)?eachPost?.text:''}
             </div>
 
 
