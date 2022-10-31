@@ -116,9 +116,13 @@ const PostDailogBox = () => {
   }
   const closeHandle = () => {
     setopen(false)
+setImageUrl(null)
+setSelectedImage(null)
   }
   const closeHandle2 = () => {
     setopen2(false)
+    setImageUrl(null)
+    setSelectedImage(null)
   }
 
 
@@ -252,14 +256,14 @@ const PostDailogBox = () => {
 
 
 
-
-
-    
+        console.log('file', file)
+      
     // 
   
   }
-
-
+  console.log('image', selectedImage)
+  console.log('imageURL', imageUrl) 
+  console.log('imagepost', onclickPostImage) 
 
 
   const deletePost = async (postId) => {
@@ -291,7 +295,7 @@ console.log(editing.editingText)
 
 
 
-    // console.log('postId', postId)
+    
   }
 
 
@@ -349,7 +353,7 @@ console.log('postid',onclickPostid)
                 id="outlined-multiline-static"
                 placeholder='What`s in your mind, Muhamamd Anas?'
                 multiline
-                rows={8}
+                rows={4}
                 onChange={(e) => {
                   setPostText(e.target.value)
                 }}
@@ -376,6 +380,7 @@ console.log('postid',onclickPostid)
       <input
        id='select-image'
         type="file"
+ 
         name='postImage' 
                 onChange={(e)=>{
                 setFile(e.currentTarget.files[0])
@@ -609,6 +614,17 @@ deletePost(onclickPostid)
                 style={{ width: '100%' }}
                 
               />
+
+{  ( 
+        <Box mt={2}
+        m={3}
+        >
+          
+          <img src={(imageUrl===null)?onclickPostImage
+        :imageUrl  
+        } alt='o' height="100px" />
+        </Box>
+      )}
             </DialogContentText>
 
           </DialogContent>
@@ -622,11 +638,11 @@ deletePost(onclickPostid)
       <input
        id='select-image'
         type="file"
-        //  value={editing.editingImage}
+          
         name='postImage' 
                 onChange={(e)=>{
-                
-                setSelectedImage(e.target.files[0])
+           
+                  setSelectedImage(e.target.files[0])
                 setEditing({
                   ...editing,
                   editingImage: e.target.value
