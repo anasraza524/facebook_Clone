@@ -133,7 +133,14 @@ const PostDailogBox = () => {
 
 
 
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
 
+  useEffect(() => {
+    if (selectedImage) {
+      setImageUrl(URL.createObjectURL(selectedImage));
+    }
+  }, [selectedImage]);
 
   const [editing, setEditing] = useState({
     editingId: null,
@@ -348,22 +355,48 @@ console.log('postid',onclickPostid)
                 }}
                 style={{ width: '100%' }}
               />
+{imageUrl && selectedImage && ( 
+        <Box mt={2}
+        m={3}
+        >
+          
+          <img src={imageUrl} alt={selectedImage.name} height="100px" />
+        </Box>
+      )}
+
             </DialogContentText>
           </DialogContent>
           <Stack m='10px' borderRadius='5px' border="solid 1px lightGrey" p='15px' paddingLeft='30px'>
             <div style={{ display: 'flex' }}>
               <span style={{ fontWeight: 'bold', fontSize: '15px' }}> Add your Photo </span>
 
-              <span style={{ alignItems: 'baseline', marginLeft: '50%' }} >
+              <span style={{ alignItems: 'baseline',display:'flex', marginLeft: '50%' }} >
               
-              <span>  <FaImage style={{ paddingLeft: "5px", fontSize: "25px", color: 'green' }} />
-               <input type="file"
-                name='postImage' 
+              <div >
+      <input
+       id='select-image'
+        type="file"
+        name='postImage' 
                 onChange={(e)=>{
                 setFile(e.currentTarget.files[0])
+                setSelectedImage(e.target.files[0])
                }}
-                />
-              </span>
+               
+        style={{ display: 'none' }}
+
+
+      />
+      <label htmlFor="select-image">
+       
+      < FaImage style={{ paddingLeft: "5px", fontSize: "25px", color: 'green' }} />
+     
+      </label>
+      
+    </div>
+
+
+
+              
                 <FaUserTag style={{ paddingLeft: "5px", fontSize: "25px", color: 'blue' }} />
 
                 <BsEmojiSmile style={{ paddingLeft: "5px", fontSize: "25px", color: 'yellow' }} />
@@ -582,22 +615,48 @@ deletePost(onclickPostid)
           <Stack m='10px' borderRadius='5px' border="solid 1px lightGrey" p='15px' paddingLeft='30px'>
             <div style={{ display: 'flex' }}>
               <span style={{ fontWeight: 'bold', fontSize: '15px' }}> Add your Photo </span>
-
-              <span style={{ alignItems: 'baseline', marginLeft: '50%' }} >
-              <span>  <FaImage style={{ paddingLeft: "5px", fontSize: "25px", color: 'green' }} />
-               <input
-                type="file"
-              //  value={this.editing.editingImage}
-                name='postImage' 
-              onChange={(e)=>{
+              <span style={{ alignItems: 'baseline',display:'flex', marginLeft: '50%' }} >
+              
+              
+              <div >
+      <input
+       id='select-image'
+        type="file"
+        //  value={editing.editingImage}
+        name='postImage' 
+                onChange={(e)=>{
+                
+                setSelectedImage(e.target.files[0])
                 setEditing({
                   ...editing,
                   editingImage: e.target.value
                 })
                setFile(e.currentTarget.files[0])
                }}
+               
+        style={{ display: 'none' }}
+
+
+      />
+      <label htmlFor="select-image">
+       
+      < FaImage style={{ paddingLeft: "5px", fontSize: "25px", color: 'green' }} />
+     
+      </label>
+      
+    </div>
+
+
+              {/* <span>  <FaImage style={{ paddingLeft: "5px", fontSize: "25px", color: 'green' }} />
+               <input
+                type="file"
+              //  value={editing.editingImage}
+                name='postImage' 
+              onChange={(e)=>{
+                
+               }}
                 />
-              </span>
+              </span> */}
 
 
                 <FaUserTag style={{ paddingLeft: "5px", fontSize: "25px", color: 'blue' }} />
