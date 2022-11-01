@@ -3,7 +3,7 @@ import PostLoader from './PostLoader';
 import Leftpannel from '../../leftpannel';
 import '../../App.css';
 import { Button, Divider, TextareaAutosize, TextField, Stack, Paper, styled }
- from '@mui/material';
+  from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -25,8 +25,9 @@ import { MdModeEditOutline, MdMoreHoriz } from 'react-icons/md';
 import { BsFillPinAngleFill, BsPeopleFill, BsFillCalendarDateFill } from 'react-icons/bs';
 import { GiSaveArrow } from 'react-icons/gi';
 import { IoMdNotificationsOff } from 'react-icons/io';
-import { ListItemButton, ListItemIcon,Tooltip
- , Typography,IconButton,Box,Avatar
+import {
+  ListItemButton, ListItemIcon, Tooltip
+  , Typography, IconButton, Box, Avatar
 } from '@mui/material';
 
 import moment from 'moment';
@@ -35,9 +36,9 @@ import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 
 
-import {  alpha } from '@mui/material/styles';
+import { alpha } from '@mui/material/styles';
 
-import  { MenuProps } from '@mui/material/Menu';
+import { MenuProps } from '@mui/material/Menu';
 
 
 
@@ -63,7 +64,7 @@ import {
   query, collection,
   addDoc, getDocs, doc, onSnapshot
   , serverTimestamp, orderBy, limit
-  , deleteDoc,updateDoc
+  , deleteDoc, updateDoc
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -116,8 +117,8 @@ const PostDailogBox = () => {
   }
   const closeHandle = () => {
     setopen(false)
-setImageUrl(null)
-setSelectedImage(null)
+    setImageUrl(null)
+    setSelectedImage(null)
   }
   const closeHandle2 = () => {
     setopen2(false)
@@ -136,7 +137,7 @@ setSelectedImage(null)
 
 
 
-
+  const [check, setcheck] = useState('')
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
@@ -149,7 +150,7 @@ setSelectedImage(null)
   const [editing, setEditing] = useState({
     editingId: null,
     editingText: "",
-    editingImage:""
+    editingImage: ""
   })
   const [file, setFile] = useState(null)
   const [updatedText, setUpdatedText] = useState('')
@@ -179,7 +180,7 @@ setSelectedImage(null)
 
 
 
-    
+
 
 
 
@@ -220,88 +221,87 @@ setSelectedImage(null)
     closeHandle()
 
     const cloudinaryData = new FormData();
-    cloudinaryData.append("file", file);
+    cloudinaryData.append("file", (file));
     cloudinaryData.append("upload_preset", "profilePicture");
-    cloudinaryData.append("cloud_name","dnjbznntm");
+    cloudinaryData.append("cloud_name", "dnjbznntm");
     console.log(cloudinaryData);
     axios.post(`https://api.cloudinary.com/v1_1/dnjbznntm/image/upload`,
-    cloudinaryData, {
-       header:{
-'Content-Type':'multipart/from-data'
-       }
+      cloudinaryData, {
+      header: {
+        'Content-Type': 'multipart/from-data'
+      }
     })
-        .then(async res => {
-           
-            console.log("from then", res.data);
-   
-            try {
-              const docRef = await addDoc(collection(db, "Posts"), {
-                text: postText,
-                createdOn: serverTimestamp(),
-                img:res?.data?.url,
-        
-              });
-              console.log("Document written with ID: ", docRef.id);
-             } catch (e) {
-              console.error("Error adding document: ", e);
-              setIsLoading(false)
-            }   
-
-        })
-        .catch(err => {
-            console.log("from catch", err);
-        })
+      .then(async res => {
+        console.log("from then", res.data);
 
 
+        try {
+          const docRef = await addDoc(collection(db, "Posts"), {
+            text: postText,
+            createdOn: serverTimestamp(),
+            img: res?.data?.url,
+
+          });
+          console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+          setIsLoading(false)
+        }
+
+      })
+      .catch(err => {
+        console.log("from catch", err);
+      })
 
 
 
-        console.log('file', file)
-      
+
+
+    console.log('file', file)
+
     // 
-  
+
   }
-  console.log('image', selectedImage)
-  console.log('imageURL', imageUrl) 
-  console.log('imagepost', onclickPostImage) 
+  // console.log('image', selectedImage)
+  // console.log('imageURL', imageUrl) 
+  // console.log('imagepost', onclickPostImage) 
 
 
   const deletePost = async (postId) => {
     handleClose()
-     await deleteDoc(doc(db, "Posts", postId));
+    await deleteDoc(doc(db, "Posts", postId));
 
-    console.log('postId', postId)
+    // console.log('postId', postId)
   }
 
 
 
   const updatedPost = async (e) => {
-   
+    closeHandle2()
     e.preventDefault();
 
-    
-    
-await updateDoc(doc(db, "Posts", editing.editingId), {
-  
-  text:editing.editingText,
-img:editing.editingImage
-});
-console.log(editing.editingText)
- setEditing({
-  editingId: null,
-  editingText: "",
-  editingImage:''
- })
+
+    await updateDoc(doc(db, "Posts", editing.editingId), {
+      text: editing.editingText,
+      img: editing.editingImage
+
+    });
+
+    setEditing({
+      editingId: null,
+      editingText: "",
+      editingImage: ''
+    })
 
 
 
-    
   }
+  console.log("edit", editing)
+  console.log("check", check)
 
-
-//   console.log('editingId:',postId)
-// console.log('editingText',text)
-console.log('postid',onclickPostid)
+  //   console.log('editingId:',postId)
+  // // console.log('editingText',text)
+  // console.log('postid',onclickPostid)
 
 
   return (
@@ -359,14 +359,14 @@ console.log('postid',onclickPostid)
                 }}
                 style={{ width: '100%' }}
               />
-{imageUrl && selectedImage && ( 
-        <Box mt={2}
-        m={3}
-        >
-          
-          <img src={imageUrl} alt={selectedImage.name} height="100px" />
-        </Box>
-      )}
+              {imageUrl && selectedImage && (
+                <Box mt={2}
+                  m={3}
+                >
+
+                  <img src={imageUrl} alt={selectedImage.name} height="100px" />
+                </Box>
+              )}
 
             </DialogContentText>
           </DialogContent>
@@ -374,34 +374,34 @@ console.log('postid',onclickPostid)
             <div style={{ display: 'flex' }}>
               <span style={{ fontWeight: 'bold', fontSize: '15px' }}> Add your Photo </span>
 
-              <span style={{ alignItems: 'baseline',display:'flex', marginLeft: '50%' }} >
-              
-              <div >
-      <input
-       id='select-image'
-        type="file"
- 
-        name='postImage' 
-                onChange={(e)=>{
-                setFile(e.currentTarget.files[0])
-                setSelectedImage(e.target.files[0])
-               }}
-               
-        style={{ display: 'none' }}
+              <span style={{ alignItems: 'baseline', display: 'flex', marginLeft: '50%' }} >
+
+                <div >
+                  <input
+                    id='select-image'
+                    type="file"
+
+                    name='postImage'
+                    onChange={(e) => {
+                      setFile(e.currentTarget.files[0])
+                      setSelectedImage(e.target.files[0])
+                    }}
+
+                    style={{ display: 'none' }}
 
 
-      />
-      <label htmlFor="select-image">
-       
-      < FaImage style={{ paddingLeft: "5px", fontSize: "25px", color: 'green' }} />
-     
-      </label>
-      
-    </div>
+                  />
+                  <label htmlFor="select-image">
+
+                    < FaImage style={{ paddingLeft: "5px", fontSize: "25px", color: 'green' }} />
+
+                  </label>
+
+                </div>
 
 
 
-              
+
                 <FaUserTag style={{ paddingLeft: "5px", fontSize: "25px", color: 'blue' }} />
 
                 <BsEmojiSmile style={{ paddingLeft: "5px", fontSize: "25px", color: 'yellow' }} />
@@ -437,106 +437,104 @@ console.log('postid',onclickPostid)
             <morebox>
 
               <div style={{ float: 'right', fontSize: '25px' }} id="fade-button"
-        // aria-controls={mopen ? 'fade-menu' : undefined}
-        // aria-haspopup="true"
-        // aria-expanded={mopen ? 'true' : undefined}
-       
-        onClick={handleClick}>
+                // aria-controls={mopen ? 'fade-menu' : undefined}
+                // aria-haspopup="true"
+                // aria-expanded={mopen ? 'true' : undefined}
+
+                onClick={handleClick}>
                 <MdMoreHoriz
                   onClick={() => {
- setonclickPostid(eachPost?.id)
- setOnclickPostText(eachPost?.text)
- setOnclickPostImage(eachPost?.img)
+                    setonclickPostid(eachPost?.id)
+                    setOnclickPostText(eachPost?.text)
+                    setOnclickPostImage(eachPost?.img)
 
- }}
-/>
+                  }}
+                />
               </div>
 
 
 
 
               <div>
-     
-      <Menu
-      sx={{ width: 340, fontWeight: "bold" }}
-        id="fade-menu"
-        MenuListProps={{
-          'aria-labelledby': 'fade-button',
-        }}
-    
-        anchorEl={anchorEl}
-        open={mopen}
-        onClose={handleClose}
-        TransitionComponent={Fade}
-      
 
-          
-          
-        
-      >
-        <MenuItem onClick={handleClose}>
-        <div style={{ fontSize: '20px', paddingRight: '10px' }}>
-                          <BsFillPinAngleFill />
-                        </div>
+                <Menu
+                  sx={{ width: 340, fontWeight: "bold" }}
+                  id="fade-menu"
+                  MenuListProps={{
+                    'aria-labelledby': 'fade-button',
+                  }}
 
-                        Pin post
-          </MenuItem>
-
-        <MenuItem onClick={handleClose}>
-        <div style={{ fontSize: '20px', paddingRight: '10px' }}>
-                          <GiSaveArrow />
-                        </div>
-                        Save vidoe
-          </MenuItem>
-          <Divider />
-        <MenuItem onClick={() => {
-          
-          handleClose()
-openHandle2()
-setEditing({
-  editingId:onclickPostid,
-  editingText:onclickPostText,
-  editingImage:onclickPostImage
-})
-
-}}>
-        <div style={{ fontSize: '20px', paddingRight: '10px' }}>
-                          < MdModeEditOutline />
-                        </div>
-                        Edit post
-          </MenuItem>
-          <MenuItem onClick={() => {
-
-deletePost(onclickPostid)
-
-}}>
-          <div  style={{ fontSize: '20px', paddingRight: '10px' }}>
-                          <MdDelete />
-                          </div>
-                        Delete
-                        
-          </MenuItem>
-
-          <MenuItem onClick={handleClose}>
-          <div style={{ fontSize: '20px', paddingRight: '10px' }}>
-                          <IoMdNotificationsOff />
-                        </div>
-                        Turn of notification for this post
-                        </MenuItem>
-
-                        <MenuItem onClick={handleClose}>
-                        <div style={{ fontSize: '20px', paddingRight: '10px' }}>
-                          <BsFillCalendarDateFill />
-                        </div>
-                        Edit date
-                        </MenuItem>  
-                            
-      </Menu>
-    </div>
-
-{/*  */}
+                  anchorEl={anchorEl}
+                  open={mopen}
+                  onClose={handleClose}
+                  TransitionComponent={Fade}
 
 
+
+
+
+                >
+                  <MenuItem onClick={handleClose}>
+                    <div style={{ fontSize: '20px', paddingRight: '10px' }}>
+                      <BsFillPinAngleFill />
+                    </div>
+
+                    Pin post
+                  </MenuItem>
+
+                  <MenuItem onClick={handleClose}>
+                    <div style={{ fontSize: '20px', paddingRight: '10px' }}>
+                      <GiSaveArrow />
+                    </div>
+                    Save vidoe
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem onClick={() => {
+
+                    handleClose()
+                    openHandle2()
+                    setEditing({
+                      editingId: onclickPostid,
+                      editingText: onclickPostText,
+                      editingImage: onclickPostImage
+                    })
+
+                  }}>
+                    <div style={{ fontSize: '20px', paddingRight: '10px' }}>
+                      < MdModeEditOutline />
+                    </div>
+                    Edit post
+                  </MenuItem>
+                  <MenuItem onClick={() => {
+
+                    deletePost(onclickPostid)
+
+                  }}>
+                    <div style={{ fontSize: '20px', paddingRight: '10px' }}>
+                      <MdDelete />
+                    </div>
+                    Delete
+
+                  </MenuItem>
+
+                  <MenuItem onClick={handleClose}>
+                    <div style={{ fontSize: '20px', paddingRight: '10px' }}>
+                      <IoMdNotificationsOff />
+                    </div>
+                    Turn of notification for this post
+                  </MenuItem>
+
+                  <MenuItem onClick={handleClose}>
+                    <div style={{ fontSize: '20px', paddingRight: '10px' }}>
+                      <BsFillCalendarDateFill />
+                    </div>
+                    Edit date
+                  </MenuItem>
+
+                </Menu>
+              </div>
+
+              {/*  */}
 
 
 
@@ -545,7 +543,9 @@ deletePost(onclickPostid)
 
 
 
-      
+
+
+
 
 
             </morebox>
@@ -573,97 +573,97 @@ deletePost(onclickPostid)
 
             </div>
             <div className="post-content">
-              
-            {(onclickPostid === editing.editingId) ?
-              
-          <form onSubmit={updatedPost}>
-           <Dialog
-          open={open2}
-          onClose={closeHandle2}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
 
-        >
+              {(onclickPostid === editing.editingId) ?
 
-          <DialogTitle id="alert-dialog-title">
-            <span style={{ fontWeight: 'bold', fontSize: '22px', alignItems: 'center' }}>  Updated Post.. </span>
-
-            <Button style={{ float: 'right', fontSize: '22px', color: 'Black' }}
-             onClick={closeHandle2}
-             ><MdCancel /></Button>
-          </DialogTitle>
-          <Divider />
-
-          <DialogContent style={{ height: '260px', width: '600px' }}>
-            <DialogContentText id="alert-dialog-description">
-              <TextField
-                id="outlined-multiline-static"
-                type="text"
-              
-                value={editing.editingText}
-                onChange={(e) => {
-                  setEditing({
-                    ...editing,
-                    editingText: e.target.value
-                  })
-                }}
-
-                placeholder="please enter updated text"
-                
-                rows={8}
-                style={{ width: '100%' }}
-                
-              />
-
-{  ( 
-        <Box mt={2}
-        m={3}
-        >
-          
-          <img src={(imageUrl===null)?onclickPostImage
-        :imageUrl  
-        } alt='o' height="100px" />
-        </Box>
-      )}
-            </DialogContentText>
-
-          </DialogContent>
-          <Stack m='10px' borderRadius='5px' border="solid 1px lightGrey" p='15px' paddingLeft='30px'>
-            <div style={{ display: 'flex' }}>
-              <span style={{ fontWeight: 'bold', fontSize: '15px' }}> Add your Photo </span>
-              <span style={{ alignItems: 'baseline',display:'flex', marginLeft: '50%' }} >
-              
-              
-              <div >
-      <input
-       id='select-image'
-        type="file"
-          
-        name='postImage' 
-                onChange={(e)=>{
-           
-                  setSelectedImage(e.target.files[0])
-                setEditing({
-                  ...editing,
-                  editingImage: e.target.value
-                })
-               setFile(e.currentTarget.files[0])
-               }}
-               
-        style={{ display: 'none' }}
-
-
-      />
-      <label htmlFor="select-image">
        
-      < FaImage style={{ paddingLeft: "5px", fontSize: "25px", color: 'green' }} />
-     
-      </label>
-      
-    </div>
+                  <Dialog
+                    open={open2}
+                    onClose={closeHandle2}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+
+                  >
+
+                    <DialogTitle id="alert-dialog-title">
+                      <span style={{ fontWeight: 'bold', fontSize: '22px', alignItems: 'center' }}>  Updated Post.. </span>
+
+                      <Button style={{ float: 'right', fontSize: '22px', color: 'Black' }}
+                        onClick={closeHandle2}
+                      ><MdCancel /></Button>
+                    </DialogTitle>
+                    <Divider />
+
+                    <DialogContent style={{ height: '260px', width: '600px' }}>
+                      <DialogContentText id="alert-dialog-description">
+                        <TextField
+                          id="outlined-multiline-static"
+                          type="text"
+
+                          value={editing.editingText}
+                          onChange={(e) => {
+                            setEditing({
+                              ...editing,
+                              editingText: e.target.value
+                            })
+                          }}
+
+                          placeholder="please enter updated text"
+
+                          rows={4}
+                          style={{ width: '100%' }}
+
+                        />
+
+                        {(
+                          <Box mt={2}
+                            m={3}
+                          >
+
+                            <img src={(imageUrl === null) ? onclickPostImage
+                              : imageUrl
+                            } alt='o' height="100px" />
+                          </Box>
+                        )}
+                      </DialogContentText>
+
+                    </DialogContent>
+                    <Stack m='10px' borderRadius='5px' border="solid 1px lightGrey" p='15px' paddingLeft='30px'>
+                      <div style={{ display: 'flex' }}>
+                        <span style={{ fontWeight: 'bold', fontSize: '15px' }}> Add your Photo </span>
+                        <span style={{ alignItems: 'baseline', display: 'flex', marginLeft: '50%' }} >
 
 
-              {/* <span>  <FaImage style={{ paddingLeft: "5px", fontSize: "25px", color: 'green' }} />
+                          <div >
+                            <input
+                              id='select-image'
+                              type="file"
+
+                              name='postImage'
+                              onChange={(e) => {
+                                setEditing({
+                                  ...editing,
+                                  editingImage: e.target.value
+                                })
+                                setSelectedImage(e.target.files[0])
+
+                                setFile(e.currentTarget.files[0])
+                              }}
+
+                              style={{ display: 'none' }}
+
+
+                            />
+                            <label htmlFor="select-image">
+
+                              < FaImage style={{ paddingLeft: "5px", fontSize: "25px", color: 'green' }} />
+
+                            </label>
+
+                          </div>
+
+
+                          {/* <span>  <FaImage style={{ paddingLeft: "5px", fontSize: "25px", color: 'green' }} />
                <input
                 type="file"
               //  value={editing.editingImage}
@@ -675,34 +675,36 @@ deletePost(onclickPostid)
               </span> */}
 
 
-                <FaUserTag style={{ paddingLeft: "5px", fontSize: "25px", color: 'blue' }} />
+                          <FaUserTag style={{ paddingLeft: "5px", fontSize: "25px", color: 'blue' }} />
 
-                <BsEmojiSmile style={{ paddingLeft: "5px", fontSize: "25px", color: 'yellow' }} />
-                <HiLocationMarker style={{ paddingLeft: "5px", fontSize: "25px", color: 'red' }} />
-                <HiFlag style={{ paddingLeft: "5px", fontSize: "25px", color: 'skyblue' }} />
+                          <BsEmojiSmile style={{ paddingLeft: "5px", fontSize: "25px", color: 'yellow' }} />
+                          <HiLocationMarker style={{ paddingLeft: "5px", fontSize: "25px", color: 'red' }} />
+                          <HiFlag style={{ paddingLeft: "5px", fontSize: "25px", color: 'skyblue' }} />
 
-                <FiMoreHorizontal style={{ paddingLeft: "5px", fontSize: "25px", color: 'grey' }} />
+                          <FiMoreHorizontal style={{ paddingLeft: "5px", fontSize: "25px", color: 'grey' }} />
 
 
-              </span>
-            </div>
-          </Stack>
-          <DialogActions>
+                        </span>
+                      </div>
+                    </Stack>
+                    <DialogActions>
 
-            <Button style={{ width: '100%' }}
-             type='submit'
-          onClick={closeHandle2}
-             variant="contained" disableElevation >
-              update
-            </Button>
+                      <Button style={{ width: '100%' }}
+                        type='submit'
+                        onClick={updatedPost}
+                        variant="contained" disableElevation >
+                        update
+                      </Button>
 
-          </DialogActions>
+                    </DialogActions>
 
-        </Dialog></form>
+                  </Dialog>
 
-    : eachPost?.text}
-      {(closeHandle2 )?eachPost?.text:''}
-      <img src={eachPost?.img}  />
+                : <p>{eachPost?.text}</p>
+              }
+              <p>{eachPost?.text}</p>
+              {/* {(closeHandle2 )?eachPost?.text:''} */}
+              <img src={eachPost?.img} />
             </div>
 
 
