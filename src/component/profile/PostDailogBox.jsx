@@ -66,6 +66,7 @@ import {
   , serverTimestamp, orderBy, limit
   , deleteDoc, updateDoc
 } from "firebase/firestore";
+import { upload } from '@testing-library/user-event/dist/upload';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCHJPHtL28wBhCbQ-OMfBvAYjWvCehzD_U",
@@ -152,6 +153,7 @@ const PostDailogBox = () => {
     editingText: "",
     editingImage: ""
   })
+  const [updatedfile, setupdatedFile] = useState(null)
   const [file, setFile] = useState(null)
   const [updatedText, setUpdatedText] = useState('')
   const [onclickPostImage, setOnclickPostImage] = useState("")
@@ -221,10 +223,15 @@ const PostDailogBox = () => {
     closeHandle()
 
     const cloudinaryData = new FormData();
-    cloudinaryData.append("file", (file));
+    cloudinaryData.append("file", 
+
+    file 
+
+    
+    );
     cloudinaryData.append("upload_preset", "profilePicture");
     cloudinaryData.append("cloud_name", "dnjbznntm");
-    console.log(cloudinaryData);
+    console.log("cloudinaryData",cloudinaryData);
     axios.post(`https://api.cloudinary.com/v1_1/dnjbznntm/image/upload`,
       cloudinaryData, {
       header: {
@@ -234,13 +241,16 @@ const PostDailogBox = () => {
       .then(async res => {
         console.log("from then", res.data);
 
-
+      
         try {
           const docRef = await addDoc(collection(db, "Posts"), {
             text: postText,
             createdOn: serverTimestamp(),
             img: res?.data?.url,
 
+            
+
+            
           });
           console.log("Document written with ID: ", docRef.id);
         } catch (e) {
@@ -283,7 +293,7 @@ const PostDailogBox = () => {
 
     await updateDoc(doc(db, "Posts", editing.editingId), {
       text: editing.editingText,
-      img: editing.editingImage
+     img:editing.editingImage
 
     });
 
@@ -553,7 +563,7 @@ const PostDailogBox = () => {
 
             <div className="post-top" >
               <div className="dp">
-                <img src='https://scontent.fkhi20-1.fna.fbcdn.net/v/t39.30808-6/306786755_1202817790289152_518738169980312581_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeGhdixRYXqpwfInQPFISuX6JYrz7428nSUlivPvjbydJTr03znpDJNKZOwteDQCzVK6M4gJhb1I13sdmEIXD2eo&_nc_ohc=a5kNmKwtOLcAX9lScUx&_nc_ht=scontent.fkhi20-1.fna&oh=00_AT_ZeQ8bzY0KdlTSECR1njcTYeGcOne02ROIT76Felto3w&oe=635DDC00' alt="profile" />
+                <img src='http://res.cloudinary.com/dnjbznntm/image/upload/v1667164749/postsPhotos/nqhclfw6gkjlzzae8okp.png' alt="profile" />
               </div>
               <div className="post-info">
                 <p className="name">Muhammad Anas Raza <br />
@@ -641,13 +651,9 @@ const PostDailogBox = () => {
 
                               name='postImage'
                               onChange={(e) => {
-                                setEditing({
-                                  ...editing,
-                                  editingImage: e.target.value
-                                })
-                                setSelectedImage(e.target.files[0])
-
-                                setFile(e.currentTarget.files[0])
+                          
+                                setupdatedFile(e.currentTarget.files[0])
+                      setSelectedImage(e.target.files[0])
                               }}
 
                               style={{ display: 'none' }}
@@ -700,7 +706,7 @@ const PostDailogBox = () => {
 
                   </Dialog>
 
-                : <p>{eachPost?.text}</p>
+                : ""
               }
               <p>{eachPost?.text}</p>
               {/* {(closeHandle2 )?eachPost?.text:''} */}

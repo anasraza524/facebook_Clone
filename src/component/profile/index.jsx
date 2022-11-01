@@ -4,22 +4,56 @@ import {BiImageAdd } from "react-icons/bi";
 import { useState, useEffect } from "react";
 
 import { margin } from '@mui/system';
-function profile() {
+
+function profile({setFile,file,Posts}) {
     return (
+     
         <div>
+   {/* {
+            Posts.map((eachPost, i) => ( */}
+
             <div className="profileBody">
                 <div className="cover">
                     <img src="https://images.unsplash.com/photo-1549813069-f95e44d7f498?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1056&q=80"
                         className="coverPhoto" alt="" />
-               
+
+                        <input
+                         type="file"
+                          accept='image/png
+                          , image/jpeg'
+                           name=""
+                            id="profileButton"
+                             hidden 
+                             onChange={(e) => {
+                                setFile(e.currentTarget.files[0])
+                               
+                              }}
+                             />
+                        <label htmlFor="profileButton">
+                        <BiImageAdd 
+                        style={{ fontSize: "35px",
+                        position:'absolute',top:'35%',right:'310px' }}/>
+                        </label>
                
                </div>
                 <div className="prfileBox">
                     <img src="https://scontent.fkhi20-1.fna.fbcdn.net/v/t39.30808-6/306786755_1202817790289152_518738169980312581_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeGhdixRYXqpwfInQPFISuX6JYrz7428nSUlivPvjbydJTr03znpDJNKZOwteDQCzVK6M4gJhb1I13sdmEIXD2eo&_nc_ohc=Y3AQ1RETYSIAX9GOqp6&_nc_ht=scontent.fkhi20-1.fna&oh=00_AfC7NCY4TWlC1v882OeBjC0SfO8kifKYyXGprr6STtuuiw&oe=6365C500"
 
-                        alt='profile' className="profilephoto" />
+                     alt='profile' className="profilephoto" />
+                   
                    <div>
-                        <input type="file" accept='image/png, image/jpeg' name="" id="profileButton" hidden />
+                        <input
+                         type="file"
+                          accept='image/png
+                          , image/jpeg'
+                           name=""
+                            id="profileButton"
+                             hidden 
+                             onChange={(e) => {
+                                setFile(e.currentTarget.files[0])
+                               
+                              }}
+                             />
                         <label htmlFor="profileButton">
                         <BiImageAdd style={{ fontSize: "35px", position:'relative',top:'60px',right:'40px' }}/>
                         </label></div>
@@ -77,6 +111,7 @@ function profile() {
                 </div>
                 </div>
             </div>
+            {/* ))} */}
         </div>
     );
 }
