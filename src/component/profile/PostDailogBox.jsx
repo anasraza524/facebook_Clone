@@ -2,61 +2,54 @@ import * as React from 'react';
 import PostLoader from './PostLoader';
 import Leftpannel from '../../leftpannel';
 import '../../App.css';
-import { Button, Divider, TextareaAutosize, TextField, Stack, Paper, styled }
-  from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { useState, useEffect } from "react";
-import { MdCancel } from 'react-icons/md';
-import { FaImage } from 'react-icons/fa';
-import { FaUserTag } from 'react-icons/fa';
-import { BsEmojiSmile } from 'react-icons/bs';
-import { HiLocationMarker, HiOutlinePhoneIncoming } from 'react-icons/hi';
-import { HiFlag } from 'react-icons/hi';
-import { FiMoreHorizontal } from 'react-icons/fi';
+
+
+// material ui 
+
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
-import { MdModeEditOutline, MdMoreHoriz } from 'react-icons/md';
-import { BsFillPinAngleFill, BsPeopleFill, BsFillCalendarDateFill } from 'react-icons/bs';
-import { GiSaveArrow } from 'react-icons/gi';
-import { IoMdNotificationsOff } from 'react-icons/io';
-import {
-  ListItemButton, ListItemIcon, Tooltip
-  , Typography, IconButton, Box, Avatar
-} from '@mui/material';
-
-import moment from 'moment';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
-
-
 import { alpha } from '@mui/material/styles';
-
 import { MenuProps } from '@mui/material/Menu';
+import { Button, Divider,
+   TextareaAutosize, TextField,
+    Stack, Paper, styled,
+    Dialog,DialogActions,DialogContent
+  ,DialogContentText,DialogTitle
+  ,ListItemButton, ListItemIcon, Tooltip
+  , Typography, IconButton, Box, Avatar
+  }
+  from '@mui/material';
 
 
+// useState and useEffect
+import { useState, useEffect } from "react";
 
-
-
-
-
-
-
-
-
-
-
-
-import { AiFillLike } from "react-icons/ai";
-import { MdInsertComment, MdDelete } from "react-icons/md";
-import { FaShare } from "react-icons/fa";
+// moment and axios 
+import moment from 'moment';
 import axios from 'axios';
+
+// react Icon 
+import { AiFillLike } from "react-icons/ai";
+import { MdModeEditOutline, MdMoreHoriz,
+  MdInsertComment, MdDelete,MdCancel
+   } from 'react-icons/md';
+
+import { BsFillPinAngleFill, BsPeopleFill,
+   BsFillCalendarDateFill, BsEmojiSmile 
+   } from 'react-icons/bs';
+
+import { GiSaveArrow } from 'react-icons/gi';
+import { IoMdNotificationsOff } from 'react-icons/io';
+import { FaImage , FaUserTag , FaShare } from 'react-icons/fa';
+import { HiLocationMarker, HiOutlinePhoneIncoming, HiFlag  } from 'react-icons/hi';
+import { FiMoreHorizontal } from 'react-icons/fi';
+
+
 // firebase
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
@@ -67,6 +60,9 @@ import {
   , deleteDoc, updateDoc
 } from "firebase/firestore";
 import { upload } from '@testing-library/user-event/dist/upload';
+
+
+// firebaseConfig
 
 const firebaseConfig = {
   apiKey: "AIzaSyCHJPHtL28wBhCbQ-OMfBvAYjWvCehzD_U",
@@ -85,17 +81,39 @@ const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
-
+// PostDailohBox Function starting from here
 const PostDailogBox = () => {
+// for upload post open and close
   const [open, setopen] = useState(false)
+  const openHandle = () => {
+    setopen(true)
+  }
+  const closeHandle = () => {
+    setopen(false)
+    // when upload close function so null the above value
+    setImageUrl(null)
+    setSelectedImage(null)
+  }
+
+// for updated edit post open and close
   const [open2, setopen2] = useState(false)
+  const openHandle2 = () => {
+    setopen2(true)
+  }
+
+  const closeHandle2 = () => {
+    setopen2(false)
+    // when updated close function so null the above value
+    setImageUrl(null)
+    setSelectedImage(null)
+  }
 
 
 
-
-
+//  more menu dailog Box on post for open and close
   const [anchorEl, setAnchorEl] = React.useState(null);
   const mopen = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -104,42 +122,9 @@ const PostDailogBox = () => {
   };
 
 
-
-
-
-
-
-
-  const openHandle = () => {
-    setopen(true)
-  }
-  const openHandle2 = () => {
-    setopen2(true)
-  }
-  const closeHandle = () => {
-    setopen(false)
-    setImageUrl(null)
-    setSelectedImage(null)
-  }
-  const closeHandle2 = () => {
-    setopen2(false)
-    setImageUrl(null)
-    setSelectedImage(null)
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-  const [check, setcheck] = useState('')
+// show the selected image under the textfield 
   const [selectedImage, setSelectedImage] = useState(null);
+
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
@@ -148,11 +133,18 @@ const PostDailogBox = () => {
     }
   }, [selectedImage]);
 
+
+
+
+  // to get updated text, image, id
   const [editing, setEditing] = useState({
     editingId: null,
     editingText: "",
     editingImage: ""
   })
+
+
+
   const [updatedfile, setupdatedFile] = useState(null)
   const [file, setFile] = useState(null)
   const [updatedText, setUpdatedText] = useState('')
@@ -162,35 +154,36 @@ const PostDailogBox = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [postText, setPostText] = useState("")
   const [Posts, setPosts] = useState([])
+  
+  
+  
+  
   useEffect(() => {
 
-    const getData = async () => {
+// non real time function is to set data in the firebase/firestore array
 
-      const querySnapshot = await getDocs(collection(db, "Posts"));
-      querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} =>`, doc.data());
-        setIsLoading(true)
-        setPosts((prev) => {
-          let arryPost = [...prev, doc.data()]
-          return arryPost;
-        })
-      });
-    }
+    // const getData = async () => {
+
+    //   const querySnapshot = await getDocs(collection(db, "Posts"));
+    //   querySnapshot.forEach((doc) => {
+    //     console.log(`${doc.id} =>`, doc.data());
+    //     setIsLoading(true)
+    //     setPosts((prev) => {
+    //       let arryPost = [...prev, doc.data()]
+    //       return arryPost;
+    //     })
+    //   });
+    // }
     // getData();
 
 
 
-
-
-
-
-
-
-
+// unsubsribe close the data when user leave  the page
     let unsubscribe = null;
+
+
+// real time function get data from firebse/firestore Post array on page load
     const getRealTimeData = async () => {
-
-
       const q = query(collection(db, "Posts"),
         orderBy('createdOn', 'desc'));
       unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -205,11 +198,11 @@ const PostDailogBox = () => {
         console.log("Posts: ", Posts);
         setPosts(Posts)
       });
-
-
     }
     getRealTimeData()
 
+
+    // unsubscribe clean up function
     return () => {
       console.log("Clean up funtion ");
       unsubscribe()
@@ -217,18 +210,19 @@ const PostDailogBox = () => {
 
   }, [])
 
+
+  // savePost fucntion set data to firebase firestiore Posts array
   const savePost = async () => {
 
     console.log("postText", postText);
     closeHandle()
 
+
+    // set data to cloudnary (storage bucket only for image) 
+  
+
     const cloudinaryData = new FormData();
-    cloudinaryData.append("file", 
-
-    file 
-
-    
-    );
+    cloudinaryData.append("file", file );
     cloudinaryData.append("upload_preset", "profilePicture");
     cloudinaryData.append("cloud_name", "dnjbznntm");
     console.log("cloudinaryData",cloudinaryData);
@@ -242,15 +236,12 @@ const PostDailogBox = () => {
         console.log("from then", res.data);
 
       
+// set text , date to firebase/firestore but set image from cloudnary to firebase/firestore
         try {
           const docRef = await addDoc(collection(db, "Posts"), {
             text: postText,
             createdOn: serverTimestamp(),
-            img: res?.data?.url,
-
-            
-
-            
+            img: res?.data?.url, 
           });
           console.log("Document written with ID: ", docRef.id);
         } catch (e) {
@@ -262,26 +253,21 @@ const PostDailogBox = () => {
       .catch(err => {
         console.log("from catch", err);
       })
-
-
-
-
-
     console.log('file', file)
 
-    // 
+    
 
   }
-  // console.log('image', selectedImage)
-  // console.log('imageURL', imageUrl) 
-  // console.log('imagepost', onclickPostImage) 
+                // console.log('image', selectedImage)
+                // console.log('imageURL', imageUrl) 
+                // console.log('imagepost', onclickPostImage) 
 
 
   const deletePost = async (postId) => {
     handleClose()
     await deleteDoc(doc(db, "Posts", postId));
 
-    // console.log('postId', postId)
+                  // console.log('postId', postId)
   }
 
 
@@ -307,15 +293,17 @@ const PostDailogBox = () => {
 
   }
   console.log("edit", editing)
-  console.log("check", check)
 
-  //   console.log('editingId:',postId)
-  // // console.log('editingText',text)
-  // console.log('postid',onclickPostid)
+
+             //   console.log('editingId:',postId)
+             // // console.log('editingText',text)
+                 // console.log('postid',onclickPostid)
 
 
   return (
     <div>
+
+     {/* create post component where onclick funtion is implemeted */}
       <div onClick={openHandle} className="post create">
         <div className="post-top">
           <div className="dp">
@@ -341,6 +329,10 @@ const PostDailogBox = () => {
         </div>
       </div>
 
+
+{/* dailog Box for upload post, when user click on create post comp. 
+so dailog Box Appear
+*/}
       <div className="dialogBox">
         <Dialog
           open={open}
@@ -437,14 +429,19 @@ const PostDailogBox = () => {
 
 
 
-      {/* Post is Starig */}
-      {/* {(isLoading) ? <PostLoader/> : ""} */}
+                {/* Post is Starig */}
+                {/* {(isLoading) ? <PostLoader/> : ""} */}
+ 
+ 
+ {/* map is implemeted to fetch data from firebase/firestore Posts array */}
       {
         Posts.map((eachPost, i) => (
 
           <div className="post" key={i}>
 
-            <morebox>
+
+{/* ... onclick more menu dailog Box  */}
+            <moreiconbox>
 
               <div style={{ float: 'right', fontSize: '25px' }} id="fade-button"
                 // aria-controls={mopen ? 'fade-menu' : undefined}
@@ -478,10 +475,6 @@ const PostDailogBox = () => {
                   open={mopen}
                   onClose={handleClose}
                   TransitionComponent={Fade}
-
-
-
-
 
                 >
                   <MenuItem onClick={handleClose}>
@@ -543,24 +536,10 @@ const PostDailogBox = () => {
 
                 </Menu>
               </div>
-
-              {/*  */}
-
+            </moreiconbox>
 
 
-
-
-
-
-
-
-
-
-
-
-            </morebox>
-
-
+{/* Post upper part include profile,name date */}
             <div className="post-top" >
               <div className="dp">
                 <img src='http://res.cloudinary.com/dnjbznntm/image/upload/v1667164749/postsPhotos/nqhclfw6gkjlzzae8okp.png' alt="profile" />
@@ -582,17 +561,19 @@ const PostDailogBox = () => {
               </div>
 
             </div>
+            
             <div className="post-content">
 
+
+{/* when onclick post id === database post id */}
               {(onclickPostid === editing.editingId) ?
 
-       
+      //  so updated post dailog box appear 
                   <Dialog
                     open={open2}
                     onClose={closeHandle2}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
-
                   >
 
                     <DialogTitle id="alert-dialog-title">
@@ -705,16 +686,19 @@ const PostDailogBox = () => {
                     </DialogActions>
 
                   </Dialog>
-
+// else empty
                 : ""
               }
+ {/* post text  */}
               <p>{eachPost?.text}</p>
-              {/* {(closeHandle2 )?eachPost?.text:''} */}
+             
+
+{/* post image */}
               <img src={eachPost?.img} />
             </div>
 
 
-
+{/* post Buttom part  */}
             <hr className="dvider" />
             <div className="post-bottom">
               <div className="action">
@@ -739,4 +723,4 @@ const PostDailogBox = () => {
   )
 }
 
-export default PostDailogBox
+export default PostDailogBox;

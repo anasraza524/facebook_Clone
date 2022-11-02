@@ -2,15 +2,151 @@ import './index.css'
 import PostDailogBox from './PostDailogBox';
 import {BiImageAdd } from "react-icons/bi";
 import { useState, useEffect } from "react";
-
+import axios from 'axios';
 import { margin } from '@mui/system';
+// firebase
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import {
+  query, collection,
+  addDoc, getDocs, doc, onSnapshot
+  , serverTimestamp, orderBy, limit
+  , deleteDoc, updateDoc
+} from "firebase/firestore";
 
-function profile({setFile,file,Posts}) {
+// const firebaseConfig = {
+//     apiKey: "AIzaSyCHJPHtL28wBhCbQ-OMfBvAYjWvCehzD_U",
+//     authDomain: "faceebooks-c47ae.firebaseapp.com",
+//     projectId: "faceebooks-c47ae",
+//     storageBucket: "faceebooks-c47ae.appspot.com",
+//     messagingSenderId: "468843951003",
+//     appId: "1:468843951003:web:08a3b19c226d194fbd273e",
+//     measurementId: "G-ZS1WJYNCW8"
+//   };
+  
+//   // Initialize Firebase
+//   const app = initializeApp(firebaseConfig);
+  
+  
+//   // Initialize Cloud Firestore and get a reference to the service
+//   const db = getFirestore(app);
+
+
+
+function profile() {
+    // const [profile, setProfile] = useState([])
+    //  const [profileFile, setProfileFile] = useState([])
+    // useEffect(() => {
+
+    //     // const getData = async () => {
+    
+    //     //   const querySnapshot = await getDocs(collection(db, "profile"));
+    //     //   querySnapshot.forEach((doc) => {
+    //     //     console.log(`${doc.id} =>`, doc.data());
+    //     //     setIsLoading(true)
+    //     //     setprofile((prev) => {
+    //     //       let arryPost = [...prev, doc.data()]
+    //     //       return arryPost;
+    //     //     })
+    //     //   });
+    //     // }
+    //     // getData();
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //         let unsubscribe = null;
+    //         const getRealTimeData = async () => {
+        
+        
+    //           const q = query(collection(db, "profile"),
+                
+    //           unsubscribe = onSnapshot(q, (querySnapshot) => {
+    //             const profile = [];
+    //             querySnapshot.forEach((doc) => {
+    //               let data = doc.data()
+    //               data.id = doc.id
+    //               profile.push(data)
+    //               // profile.push({...doc.data(),id: doc.id });
+    //               // profile.push(doc.data());
+    //             });
+    //             console.log("profile: ", profile);
+    //             setProfile(profile)
+    //           })
+        
+    //           )
+    //         }
+    //         getRealTimeData();
+        
+    //         // return () => {
+    //         //   console.log("Clean up funtion ");
+    //         //   unsubscribe()
+    //         // }
+        
+    //       }, [])
+
+    //   const saveprofile = async () => {
+
+    
+  
+    
+    //     const cloudinaryData = new FormData();
+    //     cloudinaryData.append("profileFile", 
+    
+    //     profileFile
+    
+        
+    //     );
+    //     cloudinaryData.append("upload_preset", "profilePicture");
+    //     cloudinaryData.append("cloud_name", "dnjbznntm");
+    //     console.log("cloudinaryData",cloudinaryData);
+    //     axios.post(`https://api.cloudinary.com/v1_1/dnjbznntm/image/upload`,
+    //       cloudinaryData, {
+    //       header: {
+    //         'Content-Type': 'multipart/from-data'
+    //       }
+    //     })
+    //       .then(async res => {
+    //         console.log("from then", res.data);
+    
+          
+    //         try {
+    //           const docRef = await addDoc(collection(db, "profile"), {
+    //             profile:res.data.url,
+                
+    
+                
+    //           });
+    //           console.log("Document written with ID: ", docRef.id);
+    //         } catch (e) {
+    //           console.error("Error adding document: ", e);
+             
+    //         }
+    
+    //       })
+    //       .catch(err => {
+    //         console.log("from catch", err);
+    //       })
+    
+    
+    //     }
+    
+    
+      
+    
+    //     // 
+    
+      
+
     return (
      
         <div>
-   {/* {
-            Posts.map((eachPost, i) => ( */}
+   
 
             <div className="profileBody">
                 <div className="cover">
@@ -25,7 +161,7 @@ function profile({setFile,file,Posts}) {
                             id="profileButton"
                              hidden 
                              onChange={(e) => {
-                                setFile(e.currentTarget.files[0])
+                                // setProfileFile(e.currentTarget.files[0])
                                
                               }}
                              />
@@ -50,7 +186,7 @@ function profile({setFile,file,Posts}) {
                             id="profileButton"
                              hidden 
                              onChange={(e) => {
-                                setFile(e.currentTarget.files[0])
+                                // setProfileFile(e.currentTarget.files[0])
                                
                               }}
                              />
@@ -111,9 +247,9 @@ function profile({setFile,file,Posts}) {
                 </div>
                 </div>
             </div>
-            {/* ))} */}
+    
         </div>
     );
-}
 
+}
 export default profile;

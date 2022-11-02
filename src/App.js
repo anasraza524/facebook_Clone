@@ -37,7 +37,7 @@ import "./App.css";
    
 
       <div 
-      style={{justifyContent: 'space-around'}}
+      style={{}}
        className={` ${themeMode==="dark"?"dark":"light"}`}>
          <Router>
     <NavBar toggleThemeMode={toggleThemeMode} mode={themeMode}/>
