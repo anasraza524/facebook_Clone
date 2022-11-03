@@ -17,7 +17,7 @@
     --body-color: #eee;
   }
 .profileBody{
-    max-width: 950px;
+    max-width: 1000px;
     color: var(--font-color);
 margin: 5px;
 border-radius: 5px;
@@ -25,16 +25,16 @@ border-radius: 5px;
 .coverPhoto{
 
 height: 250px;
-width: 950px;
+width: 1000px;
 
 }
 .prfileBox{
 display: flex;
 align-items: center;
+justify-content: left;
 background-color: var(--bg-color);
 padding: 10px;
 border: none;
-
 }
 .prfileBox   .profilephoto{
 height: 170px;
@@ -50,7 +50,7 @@ padding: 10px;
 }
 .introBody{
 margin: 5px;
-    max-width:370px ;
+    max-width:400px ;
     background-color: var(--bg-color);
     padding: 15px;
     border-radius: 5px;
@@ -65,7 +65,7 @@ td{
 .introfrined{
     border-radius: 5px;
     margin-top: 10px;
-    max-width:370px ;
+    max-width:400px ;
     background-color: var(--bg-color);
     padding: 7px;
     padding-left: 20px;

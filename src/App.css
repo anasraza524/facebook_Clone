@@ -1,8 +1,9 @@
 *{
-  /* margin:0;
-  padding:0; */
+ margin:0;
+  padding:0;
   box-sizing: border-box;
   font-family: sans-serif;
+  
 }
 .dark {
   --bg-color: rgb(21, 32, 43);
@@ -129,14 +130,16 @@ nav .nav-right a > i{
  .container .right-panel{
   position: sticky;
   top:70px;
-  width:250px;
+  width:290px;
   height:calc(100vh - 70px);
+
 }
 .container .left-panel{
   position: sticky;
   top:80px;
-  width:300px;
+  width:290px;
   height:calc(120vh - 70px);
+justify-content: left;
 }
 
 .container .left-panel ul{
@@ -281,17 +284,19 @@ nav .nav-right a > i{
 }
 
 .post{
-  width:620px;
+  width:670px;
   background:var(--bg-color);
   border-radius:10px;
   padding:10px;
-  margin:10px;
+  margin:7px;
+
 }
 
 .post .post-top{
   display:flex;
   align-items: center;
   padding:10px;
+  justify-content: left;
 }
 
 .post .post-top .dp{
@@ -372,6 +377,7 @@ nav .nav-right a > i{
 
 .container .right-panel{
   padding:1rem;
+
 }
 .left-panel{
   background-color: var(--bg-color);
@@ -388,6 +394,7 @@ nav .nav-right a > i{
 .right-panel .pages-section,
 .right-panel .friends-section{
   margin:1rem 0px;
+  align-items: flex-end;
 }
 
 .right-panel .pages-section h4,
@@ -423,6 +430,7 @@ nav .nav-right a > i{
 .right-panel .pages-section .page > .dp > img, 
 .right-panel .friends-section .friend > .dp > img{
   width:100%;
+ 
 }
 
 .right-panel .pages-section .name, .right-panel .friends-section .name{
