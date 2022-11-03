@@ -131,7 +131,7 @@ nav .nav-right a > i{
   position: sticky;
   top:70px;
   width:290px;
-  height:calc(100vh - 70px);
+  height:calc(120vh - 70px);
 
 }
 .container .left-panel{
